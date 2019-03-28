@@ -67,14 +67,48 @@ namespace Assignment4
             //4
             var addressesCostOver100 = sales.Where(s=>(s.PricePerItem*s.Quantity)>100.0).Select(e => e.Address);
 
-            //5
-            //var anonymous = sales.Select(new)
+            //5rice=s.
+            var anonymous = sales.Where(s=>s.Customer.ToUpper().Contains("LLC")).Select(s => new { Item =s.Item, TotalPrice = s.PricePerItem * s.Quantity, Shipping = s.ExpeditedShipping ? s.Address + " Expedite" : s.Address }).OrderBy(s=>s.TotalPrice);
+
+            //write for testing
+
+
+            Console.WriteLine("itemPriceOver10:");
+            foreach (var element in salePriceOver10)
+            {
+                Console.WriteLine(element);
+            }
+
+            Console.WriteLine("itemQuant1:");
+            foreach (var element in saleQuant1Ordered)
+            {
+                Console.WriteLine(element);
+            }
+
+            Console.WriteLine("itemTea:");
+            foreach (var element in saleTeaNotExpedited)
+            {
+                Console.WriteLine(element);
+            }
+
+            Console.WriteLine("itemof100OrderAdress:");
+            foreach (var element in addressesCostOver100)
+            {
+                Console.WriteLine(element);
+            }
+
+            Console.WriteLine("anonymousItems: ");
+            foreach (var element in anonymous)
+            {
+                Console.WriteLine(element);
+            }
 
             //Tests for Part II TotalProfit
             Console.WriteLine($"Total Profit: {TotalProfit(sales, s => s.Item == "Coffee", s=>.8*(s.PricePerItem*s.Quantity), (s, d)=>Console.WriteLine($"Coffee item for {s.Customer}, total profit: {d}"),s=>Console.WriteLine("Non Coffee Item Skipping"))}");
             //not following second example exactly
             Console.WriteLine($"Total Profit: {TotalProfit(sales, s => s.Quantity >1, s =>  (s.PricePerItem * s.Quantity)+ (s.ExpeditedShipping ? 20 : 0), (s, d) => Console.WriteLine($"Order with quantity greater than one for {s.Customer}, total profit: {d}"), s => Console.WriteLine("Quantity not more than one. Skipping"))}");
             Console.Read();
+
         }
 
         //Method for Part II
